@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
 const { RouterConfig } = require('../config/router-config');
-const { EventEmitter } = require('events');
 
 const functionTemplate = `
 exports.FUNCTIONNAME =  async ( ctx, next )=>{

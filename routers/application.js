@@ -1,5 +1,6 @@
-exports.createApplication = async (ctx, next) => {
-	ctx.body = {
-		a: 1,
-	};
-};
+
+exports.createApplication =  async ( ctx, next )=>{
+    ctx.body = {
+        a:1
+    }
+}

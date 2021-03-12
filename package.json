@@ -4,7 +4,7 @@
   "description": "一站式web全栈应用平台",
   "main": "bin/index.js",
   "scripts": {
-    "dev":"nodemon bin/index.js",
+    "dev": "nodemon bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +20,8 @@
   "dependencies": {
     "dockerode": "^3.2.1",
     "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.0",
     "koa-router": "^10.0.0"
   }
 }
