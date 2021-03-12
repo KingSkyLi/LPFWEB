@@ -3,11 +3,15 @@ const path = require('path');
 const { get } = require('https');
 
 /**
- *
- *获取images列表
+ * 
+ * @param {string} repository repository:tag
+ * @returns [err,imagelist]
  */
-async function getImageList() {
-	let [err, res] = await docker.listImages({ filter: JSON.stringify({ reference: 'centos:7' }) }).then(
+async function getImageList(repository = '') {
+	let options;
+	console.log(repository)
+	repository ? options = { filters: JSON.stringify({ reference: [repository] }) } : options = { all: true }
+	let [err, res] = await docker.listImages(options).then(
 		(res) => {
 			return [null, res];
 		},
