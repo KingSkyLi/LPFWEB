@@ -1,5 +1,27 @@
 const docker = new require('dockerode')();
 const path = require('path');
+const { get } = require('https');
+
+/**
+ *
+ *获取images列表
+ */
+async function getImageList() {
+	let [err, res] = await docker.listImages({ filter: JSON.stringify({ reference: 'centos:7' }) }).then(
+		(res) => {
+			return [null, res];
+		},
+		(err) => {
+			return [err, null];
+		}
+	);
+	if (err) {
+		return [err, null]
+	}
+	return [null, res]
+}
+
+
 async function listImage(name) {
 	let [err, res] = await docker.listImages({ all: true }).then(
 		(res) => {
@@ -68,6 +90,9 @@ async function createContainer() {
 		console.log(data.StatusCode);
 	});
 }
-listContainers().then((res) => {
-	deleteContainer(res);
-});
+
+async function testFn() {
+	let res = await getImageList()
+	console.log(res)
+}
+testFn()
