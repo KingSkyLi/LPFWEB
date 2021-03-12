@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/KingSkyLi/LPFWEB#readme",
   "dependencies": {
-    "dockerode": "^3.2.1"
+    "dockerode": "^3.2.1",
+    "koa": "^2.13.1"
   }
 }
