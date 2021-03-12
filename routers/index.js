@@ -28,23 +28,26 @@ async function readRouterConfig(params) {
 
 async function createRouterFile(fileName, options) {
 	let content = '';
+	let contenChanged = false;
 	let file = path.resolve(__dirname, fileName + '.js');
 	let res = await promisify(fs.exists)(file);
 	if (!res) {
+		contenChanged = true;
 		options.forEach((item) => {
-			if (!content.includes(`exports.${item.functionName}`)) {
-				content += functionTemplate.replace('FUNCTIONNAME', item.functionName);
-			}
+			content += functionTemplate.replace('FUNCTIONNAME', item.functionName);
 		});
 	} else {
 		content = await (await promisify(fs.readFile)(file)).toString();
 		options.forEach((item) => {
 			if (!content.includes(`exports.${item.functionName}`)) {
+				contenChanged = true;
 				content += functionTemplate.replace('FUNCTIONNAME', item.functionName);
 			}
 		});
 	}
-	await promisify(fs.writeFile)(file, content);
+	if (contenChanged) {
+		await promisify(fs.writeFile)(file, content);
+	}
 }
 
 function reginsRoutes() {
