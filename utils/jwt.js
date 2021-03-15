@@ -1,12 +1,17 @@
 const jsonwebtoken = require('jsonwebtoken');
 const koajwt = require('koa-jwt');
-const secret = 'LPFWEB'
+const SECRET = 'LPFWEB';
 
-module.exports = async function getToken(userName, userId) {
-    let token = jsonwebtoken.sign(
-        { userName, userId },  // 加密userToken
-        SECRET,
-        { expiresIn: '1h' }
-    )
+async function getToken(userName, userId) {
+	let token = jsonwebtoken.sign(
+		{ userName, userId }, // 加密userToken
+		SECRET,
+		{ expiresIn: '1h' }
+	);
+	console.log(token);
+	return token;
 }
 
+module.exports = {
+	getToken,
+};

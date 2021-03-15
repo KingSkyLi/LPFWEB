@@ -1,4 +1,3 @@
-
 const HttpStatusCodeConfig = {
 	200: {
 		StatusCode: 200,
@@ -21,3 +20,5 @@ const HttpStatusCodeConfig = {
 		Desc: '服务器内部错误，无法完成请求',
 	},
 };
+
+module.exports = HttpStatusCodeConfig;
