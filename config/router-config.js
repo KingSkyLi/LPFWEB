@@ -3,6 +3,12 @@ const RouterConfig = {
 		{ method: 'POST', path: '/regist', functionName: 'regist' },
 		{ method: 'POST', path: '/login', functionName: 'login' },
 		{ method: 'POST', path: '/logout', functionName: 'logout' },
+		{ method: 'GET', path: '/loginByGithub', functionName: 'loginByGithub' },
+	],
+	auth: [
+		{
+			method: 'GET', path: '/auth/github', functionName: 'authGithub'
+		}
 	],
 	application: [{ method: 'POST', path: '/createApplication', functionName: 'createApplication' }],
 };

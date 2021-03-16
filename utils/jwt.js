@@ -6,12 +6,20 @@ async function getToken(userName, userId) {
 	let token = jsonwebtoken.sign(
 		{ userName, userId }, // 加密userToken
 		SECRET,
-		{ expiresIn: '1h' }
+		{ expiresIn: 15 }
 	);
-	console.log(token);
 	return token;
+}
+
+async function uncheckToken(app, unlessPath) {
+	app.use(koajwt({
+		secret: SECRET
+	}).unless({
+		path: unlessPath.unless
+	}))
 }
 
 module.exports = {
 	getToken,
+	uncheckToken
 };

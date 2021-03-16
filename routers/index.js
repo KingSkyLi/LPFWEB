@@ -38,7 +38,7 @@ async function createRouterFile(fileName, options) {
 	} else {
 		content = await (await promisify(fs.readFile)(file)).toString();
 		options.forEach((item) => {
-			if (!content.includes(`exports.${item.functionName}`)) {
+			if (!content.includes(`exports.${item.functionName} `)) {
 				contenChanged = true;
 				content += functionTemplate.replace('FUNCTIONNAME', item.functionName);
 			}
@@ -60,7 +60,7 @@ function reginsRoutes() {
 		Object.keys(data).forEach((fnName) => {
 			if (!RouterConfig[item].find((item) => item.functionName === fnName)) {
 				let content = fs.readFileSync(file).toString().split('\n');
-				let start = content.findIndex((item) => item.startsWith('exports.logout'));
+				let start = content.findIndex((item) => item.startsWith('exports.' + fnName + ' '));
 				let n = start;
 				while (true) {
 					n++;

@@ -1,5 +1,7 @@
 const HttpCodeConfig = require('../config/http-status-code-config');
 const jwt = require('../utils/jwt');
+
+const { gitConfig } = require('../config/auth-config')
 const test = {
 	userName: 'lipengfei',
 	passWord: '123456',
@@ -7,12 +9,6 @@ const test = {
 };
 exports.regist = async (ctx, next) => {
 	let { userName, passWord } = ctx.request.body;
-	if (userName === test.userName && passWord === test.passWord) {
-		ctx.body = {
-			userName,
-		};
-	}
-
 	await next();
 };
 
@@ -33,8 +29,14 @@ exports.login = async (ctx, next) => {
 	await next();
 };
 
+
 exports.logout = async (ctx, next) => {
 	ctx.body = {
-		a: 1,
-	};
-};
+		a: 1
+	}
+}
+
+exports.loginByGithub = async (ctx, next) => {
+	let path = `https://github.com/login/oauth/authorize?client_id=${gitConfig.clientID}`
+	ctx.redirect(path)
+}
