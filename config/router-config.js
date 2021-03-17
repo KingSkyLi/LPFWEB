@@ -10,6 +10,11 @@ const RouterConfig = {
 			method: 'GET', path: '/auth/github', functionName: 'authGithub'
 		}
 	],
+	project: [
+		{
+			method: 'POST', path: '/addProject', functionName: 'addProject'
+		}
+	],
 	application: [{ method: 'POST', path: '/createApplication', functionName: 'createApplication' }],
 };
 

@@ -28,7 +28,9 @@ async function main() {
             }
         });
     });
-    // uncheckToken(app, { unless: [/\/api\/login/, /\/api\/regist/, /\/api\/static/] })
+    // 定义不需要进行token校验的接口
+    uncheckToken(app, { unless: [/\/api\/login[A_Z|a_Z]*/, /\/api\/regist/, /\/api\/static/, /\/api\/auth[\s\S]*/] })
+    // 自动生成路由文件及函数，并注册路由
     let router = await run()
     app.use(router.routes());
     app.use(router.allowedMethods());

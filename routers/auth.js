@@ -9,8 +9,14 @@ exports.authGithub = async (ctx, next) => {
         client_secret: gitConfig.ciientSecret,
         code: code
     }
-    let res = await axiso.post('https://github.com/login/oauth/access_token', params)
-    let { access_token } = querystring.parse(res.data)
+    console.log(code)
+    let [result, error] = await axiso.post('https://github.com/login/oauth/access_token', params).then(res => [null, res], err => [err, null])
+    if (error) {
+        ctx.body = error
+        await next()
+        return
+    }
+    let { access_token } = querystring.parse(result.data)
     let [err, userInfo] = await axiso.get('https://api.github.com/user', {
         headers: {
             accept: 'application/json',
