@@ -1,6 +1,6 @@
 let gitConfig = {
     clientID: '7849c635749b455c5bb2',
-    ciientSecret: '25180c64b61e83aee9d1c810b0585ca206e42873'
+    ciientSecret: 'fac4a9600222134aff12608cdee1ee5370219612'
 }
 
 module.exports = {

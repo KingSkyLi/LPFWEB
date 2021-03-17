@@ -9,27 +9,33 @@ exports.authGithub = async (ctx, next) => {
         client_secret: gitConfig.ciientSecret,
         code: code
     }
-    console.log(code)
-    let [result, error] = await axiso.post('https://github.com/login/oauth/access_token', params).then(res => [null, res], err => [err, null])
+    let [error, result] = await axiso.post('https://github.com/login/oauth/access_token', params).then(res => [null, res], err => [err, null])
     if (error) {
         ctx.body = error
-        await next()
         return
     }
     let { access_token } = querystring.parse(result.data)
-    let [err, userInfo] = await axiso.get('https://api.github.com/user', {
-        headers: {
-            accept: 'application/json',
-            Authorization: `token ${access_token}`
+    if (access_token) {
+        let [err, userInfo] = await axiso.get('https://api.github.com/user', {
+            headers: {
+                accept: 'application/json',
+                Authorization: `token ${access_token}`
+            }
+        }).then(res => [null, res.data], err => [err, null])
+        if (err) {
+            ctx.body = err
+            return
         }
-    }).then(res => [null, res.data], err => [err, null])
-    if (err) {
-        ctx.body = err
-        await next()
+        ctx.body = {
+            userInfo
+        }
         return
     }
-    ctx.body = {
-        userInfo
-    }
+
+    ctx.body = 123
+    return
+
+    await next()
+
 }
 
