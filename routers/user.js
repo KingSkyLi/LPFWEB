@@ -1,7 +1,7 @@
 const HttpCodeConfig = require('../config/http-status-code-config');
 const jwt = require('../utils/jwt');
 
-const { gitConfig } = require('../config/auth-config')
+const { gitConfig, giteeConfig } = require('../config/auth-config')
 const test = {
 	userName: 'lipengfei',
 	passWord: '123456',
@@ -38,5 +38,10 @@ exports.logout = async (ctx, next) => {
 
 exports.loginByGithub = async (ctx, next) => {
 	let path = `https://github.com/login/oauth/authorize?client_id=${gitConfig.clientID}`
+	ctx.redirect(path)
+}
+
+exports.loginByGitee = async (ctx, next) => {
+	let path = `https://gitee.com/oauth/authorize?client_id=${giteeConfig.clientID}&redirect_uri=${giteeConfig.redirect_uri}&response_type=code&scope=user_info`
 	ctx.redirect(path)
 }

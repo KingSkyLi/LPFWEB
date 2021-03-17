@@ -4,10 +4,13 @@ const RouterConfig = {
 		{ method: 'POST', path: '/login', functionName: 'login' },
 		{ method: 'POST', path: '/logout', functionName: 'logout' },
 		{ method: 'GET', path: '/loginByGithub', functionName: 'loginByGithub' },
+		{ method: 'GET', path: '/loginByGitee', functionName: 'loginByGitee' }
 	],
 	auth: [
 		{
 			method: 'GET', path: '/auth/github', functionName: 'authGithub'
+		}, {
+			method: 'GET', path: '/auth/gitee', functionName: 'authGitee'
 		}
 	],
 	project: [
