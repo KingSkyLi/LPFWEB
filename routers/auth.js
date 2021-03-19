@@ -2,6 +2,7 @@
 const { gitConfig, giteeConfig } = require('../config/auth-config')
 const axiso = require('axios')
 const querystring = require('querystring')
+// 目前github获取token有bug，定位中
 exports.authGithub = async (ctx, next) => {
     const { code } = ctx.query
     let params = {
@@ -9,7 +10,7 @@ exports.authGithub = async (ctx, next) => {
         client_secret: gitConfig.ciientSecret,
         code: code
     }
-    let [error, result] = await axiso.post('https://github.com/login/oauth/access_token', params).then(res => [null, res], err => [err, null])
+    let [error, result] = await axiso.post(`https://github.com/login/oauth/access_token`, params).then(res => [null, res], err => [err, null])
     if (error) {
         ctx.body = {
             errorMsg: error.response || error
@@ -34,6 +35,7 @@ exports.authGitee = async (ctx, next) => {
         redirect_uri: giteeConfig.redirect_uri,
         client_secret: giteeConfig.clientSecret
     }
+
     let [err, result] = await axiso.post('https://gitee.com/oauth/token', params).then(res => [null, res], err => [err, null])
     if (err) {
         ctx.body = {
