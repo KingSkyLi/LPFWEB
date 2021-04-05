@@ -50,6 +50,16 @@ async function createRouterFile(fileName, options) {
 }
 
 function reginsRoutes() {
+	let dir = path.resolve(__dirname, './')
+	let a = fs.readdirSync(dir)
+	a.forEach(file => {
+		if (file.endsWith('.js')) {
+			let key = file.replace('.js', '')
+			if (!RouterConfig[key] && key !== 'index') {
+				fs.unlinkSync(dir + '/' + file)
+			}
+		}
+	})
 	Object.keys(RouterConfig).forEach((item) => {
 		let file = path.resolve(__dirname, item + '.js');
 		let data = require(file);

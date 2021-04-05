@@ -74,27 +74,27 @@ async function listContainers(containerID = '') {
 	return [null, res]
 }
 
-/**
- * 删容器
- *
- * @param {string} [containerID='']
- * @returns
- */
-async function removeContainer(containerID) {
-	let container = docker.getContainer(containerID)
-	let result = await new Promise((resolve, reject) => {
-		container.remove(function (err, data) {
-			if (err) {
-				reject(err)
-			}
-			resolve(data)
-		})
-	}).then(res => [null, res], err => [err, null])
-	return result
-}
+// /**
+//  * 删容器
+//  *
+//  * @param {string} [containerID='']
+//  * @returns
+//  */
+// async function removeContainer(containerID) {
+// 	let container = docker.getContainer(containerID)
+// 	let result = await new Promise((resolve, reject) => {
+// 		container.remove(function (err, data) {
+// 			if (err) {
+// 				reject(err)
+// 			}
+// 			resolve(data)
+// 		})
+// 	}).then(res => [null, res], err => [err, null])
+// 	return result
+// }
 
 /**
- *
+ * 创建容器
  *
  * @param {*} imageName 镜像
  * @param {*} serverport 服务端口
@@ -185,17 +185,12 @@ async function removeContainer(containerId) {
 	return result
 }
 
-
-async function testFn() {
-	// let res = await createContainer('lpfwebnode:v1', '3000', '30001')
-	let r = await removeContainer('7d3098808748')
-	console.log(r)
-	// removeContainer('1f90a984cced')
-	// removeContainer('154fa318801f')
-	// removeContainer('a64d9aa11fd4')
-	// const [err, [container]] = await listContainers('cf349d2606f4')
-	// const data = await docker.getContainer(container.Id).inspect()
-	// console.log(data)
-	// console.log(container)
+module.exports = {
+	listImages,
+	buidImage,
+	listContainers,
+	removeContainer,
+	createContainer,
+	startContainer,
+	stopContainer,
 }
-testFn()

@@ -18,7 +18,7 @@ const RouterConfig = {
 			method: 'POST', path: '/addProject', functionName: 'addProject'
 		}
 	],
-	application: [{ method: 'POST', path: '/createApplication', functionName: 'createApplication' }],
+	application: [{ method: 'POST', path: '/createApplication', functionName: 'createApplication' }]
 };
 
 module.exports = {

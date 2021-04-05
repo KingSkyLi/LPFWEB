@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "dev": "node bin/start.js",
-    "watch": "nodemon bin/start.js",
+    "watch": "nodemon bin/start.js -i config/router-config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
