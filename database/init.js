@@ -4,22 +4,31 @@ const { EventEmitter } = require('events')
 let event = new EventEmitter()
 
 class Db {
-    constructor(default_url = '', cb) {
-        default_url && (url = default_url)
+    constructor(dbName) {
         let client = new MongoClient(url, {
             useNewUrlParser: true
         })
+        this.dbName = dbName || 'LPFWEB'
         this.client = client
-        this.cb = cb
+
     }
-    connect() {
-        event.on('connect', this.cb.bind(this, [null, this.client]))
+    connect(callback) {
+        event.on('connect', async (args) => {
+
+            let [err, ctx] = args
+
+            if (!err) {
+                ctx
+            }
+            callback([err, result])
+            return
+        })
         this.client.connect((err) => {
             if (err) {
-                event.emit([err, null])
+                event.emit('conect', [err, null])
                 return
             }
-            event.emit('connect')
+            event.emit('connect', [null, this])
         })
         return
     }
@@ -29,7 +38,7 @@ class Db {
 }
 
 var a = new Db(null, (result) => {
-    let [err, client] = result
+    let [err, ctx] = result
     if (err) {
         throw err;
     }

@@ -74,25 +74,6 @@ async function listContainers(containerID = '') {
 	return [null, res]
 }
 
-// /**
-//  * 删容器
-//  *
-//  * @param {string} [containerID='']
-//  * @returns
-//  */
-// async function removeContainer(containerID) {
-// 	let container = docker.getContainer(containerID)
-// 	let result = await new Promise((resolve, reject) => {
-// 		container.remove(function (err, data) {
-// 			if (err) {
-// 				reject(err)
-// 			}
-// 			resolve(data)
-// 		})
-// 	}).then(res => [null, res], err => [err, null])
-// 	return result
-// }
-
 /**
  * 创建容器
  *
