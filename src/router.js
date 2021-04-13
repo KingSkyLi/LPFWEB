@@ -12,12 +12,12 @@ class Router {
         this.router = new KoaRouter({ prefix })
         this.routerList = JSON.parse(JSON.stringify(RouterList))
     }
-    createRouterFile() {
+    writeRouterFile() {
         let files = Object.keys(this.routerList)
         files.forEach(async fileName => {
-            let file = path.resolve(__dirname, '../routers' + fileName + '.js')
+            let file = path.resolve(__dirname, './routers/' + fileName + '.js')
             if (!fsExists(file)) {
-
+                this.createFileContent(fileName)
             } else {
                 this.createFileContent(fileName)
             }
@@ -29,13 +29,13 @@ class Router {
 
     }
     createFileContent(fileName) {
-        let file = path.resolve(__dirname, '../routers' + fileName + '.js')
+        let file = path.resolve(__dirname, './routers/' + fileName + '.js')
         let data = {
             routerClassName: fileName + 'Router',
             functionList: []
         }
         this.routerList[fileName].forEach(item => {
-            let content = fs.readFileSync(file)
+            // let content = fs.readFileSync(file)
             data.functionList.push({
                 functionName: item.functionName
             })
@@ -46,4 +46,4 @@ class Router {
 
 const route = new Router()
 
-route.createRouterFile()
+route.writeRouterFile()
