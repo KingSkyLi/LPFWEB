@@ -13,7 +13,6 @@ class Service {
         this.app = new koa()
         this.port = port
         this.Router = new router()
-        this.Router.initRouter()
     }
     registMiddleware() {
         this.app.use(staticContainer)
@@ -22,7 +21,6 @@ class Service {
                 json: ['application/json', 'application/x-www-form-urlencoded']
             }
         }))
-        console.log(this.Router.router.routes())
         this.app.use(this.Router.router.routes());
         this.app.use(this.Router.router.allowedMethods());
     }

@@ -8,18 +8,6 @@ class userRouter {
         ctx.body = 'login'
         await next();
     }
-    async logout(ctx, next) {
-        ctx.body = 'logout'
-        await next();
-    }
-    async loginByGithub(ctx, next) {
-        ctx.body = 'loginByGithub'
-        await next();
-    }
-    async loginByGitee(ctx, next) {
-        ctx.body = 'loginByGitee'
-        await next();
-    }
 }
 
 module.exports = {
