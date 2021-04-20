@@ -3,5 +3,5 @@ class projectRouter {
 }
 
 module.exports = {
-    projectRouter:new projectRouter()
+    projectRouter: new projectRouter()
 }

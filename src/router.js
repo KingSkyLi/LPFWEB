@@ -7,11 +7,20 @@ const fsExists = promisify(fs.exists)
 const Handlebars = require("handlebars");
 const { routerTemplate } = require('./templates/router-template')
 const template = Handlebars.compile(routerTemplate);
+const inquirer = require('inquirer');
 
 class Router {
     constructor(prefix = '/api') {
         this.router = new KoaRouter({ prefix })
         this.routerList = JSON.parse(JSON.stringify(RouterList))
+        let file = path.resolve(__dirname, './bakfiles/.router-config.bak.js')
+        if (!fs.existsSync(file)) {
+            let content = fs.readFileSync(path.resolve(__dirname, './config/router-config.js'))
+            fs.writeFileSync(path.resolve(__dirname, './bakfiles/.router-config.bak.js'), content)
+            this.writeRouterFile()
+        } else {
+            this.checkRouterConfigChanged()
+        }
     }
     writeRouterFile() {
         let files = Object.keys(this.routerList)
@@ -25,9 +34,6 @@ class Router {
             }
             fs.writeFileSync(file, content)
         })
-        let content = fs.readFileSync(path.resolve(__dirname, './config/router-config.js'))
-        fs.writeFileSync(path.resolve(__dirname, './bakfiles/.router-config.bak'), content)
-
     }
     createFileContent(fileName, isExist) {
         let file = path.resolve(__dirname, './routers/' + fileName + '.js')
@@ -36,6 +42,7 @@ class Router {
             functionList: []
         }
         // 文件存在
+        let temp = null
         if (isExist) {
             let routerClass = require(file)
             this.routerList[fileName].forEach(item => {
@@ -53,22 +60,51 @@ class Router {
                     })
                 }
             })
-            return template(data)
+            temp = template(data)
         } else {
             this.routerList[fileName].forEach(item => {
                 data.functionList.push({
                     functionName: item.functionName
                 })
+
             })
-            return template(data)
+            temp = template(data)
         }
+        return temp
 
     }
-    checkRouterInConfig() {
-
+    checkRouterConfigChanged() {
+        let content = fs.readFileSync(path.resolve(__dirname, './config/router-config.js'))
+        let contentBak = fs.readFileSync(path.resolve(__dirname, './bakfiles/.router-config.bak.js'))
+        if (contentBak.toString() !== content.toString()) {
+            inquirer.prompt([{
+                type: 'confirm',
+                name: 'RouterConfigChanged',
+                message: `文件${path.resolve(__dirname, './config/router-config.js')}发生变换，是否更新routers目录下的路由文件？`
+            }]).then(ans => {
+                if (ans.RouterConfigChanged) {
+                    this.writeRouterFile()
+                    fs.writeFileSync(path.resolve(__dirname, './bakfiles/.router-config.bak.js'), content)
+                }
+            }).catch(err => { console.log(err) })
+        }
+    }
+    initRouter() {
+        let files = Object.keys(this.routerList)
+        files.forEach(async fileName => {
+            let file = path.resolve(__dirname, './routers/' + fileName + '.js')
+            let routerClass = require(file)
+            this.routerList[fileName].forEach(item => {
+                let a = routerClass[fileName + 'Router'][item.functionName]
+                // 判断是不是新增的路由
+                if (typeof a === 'function' && item.functionName) {
+                    this.router[item.method.toLowerCase()](item.path, a)
+                }
+            })
+        })
     }
 }
 
-const route = new Router()
-
-route.writeRouterFile()
+module.exports = {
+    router: Router
+}

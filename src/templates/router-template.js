@@ -16,7 +16,7 @@ class {{routerClassName}} {
 }
 
 module.exports = {
-    {{routerClassName}}:new {{routerClassName}}()
+    {{routerClassName}}: new {{routerClassName}}()
 }
 `
 

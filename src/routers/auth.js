@@ -11,5 +11,5 @@ class authRouter {
 }
 
 module.exports = {
-    authRouter:new authRouter()
+    authRouter: new authRouter()
 }

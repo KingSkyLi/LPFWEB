@@ -23,5 +23,5 @@ class userRouter {
 }
 
 module.exports = {
-    userRouter:new userRouter()
+    userRouter: new userRouter()
 }

@@ -7,5 +7,5 @@ class applicationRouter {
 }
 
 module.exports = {
-    applicationRouter:new applicationRouter()
+    applicationRouter: new applicationRouter()
 }
