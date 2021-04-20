@@ -4,8 +4,8 @@ class userRouter {
         ctx.body = 'regist'
         await next();
     }
-    async login(ctx, next) {
-        ctx.body = 'login'
+    async login123(ctx, next) {
+        ctx.body = 'login123'
         await next();
     }
 }

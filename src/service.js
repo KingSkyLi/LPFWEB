@@ -8,11 +8,21 @@ const bodyPaser = require('koa-bodyparser')
 const static = require('koa-static')
 let staticContainer = static(path.resolve(__dirname, '../static'))
 const { router } = require('./router')
+const { EventEmitter } = require('events')
 class Service {
     constructor(port = 8090) {
         this.app = new koa()
         this.port = port
         this.Router = new router()
+        // 创建 eventEmitter 对象
+        this.eventEmitter = new EventEmitter();
+        this.eventEmitter.on('ok', () => {
+            this.listen()
+        })
+    }
+    async open() {
+        await this.Router.init()
+        this.registMiddleware()
     }
     registMiddleware() {
         this.app.use(staticContainer)
@@ -23,6 +33,7 @@ class Service {
         }))
         this.app.use(this.Router.router.routes());
         this.app.use(this.Router.router.allowedMethods());
+        this.eventEmitter.emit('ok')
     }
     listen() {
         this.app.listen(this.port, () => {
