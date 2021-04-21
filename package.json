@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node bin/start.js",
     "watch": "nodemon bin/start.js -i src/config/router-config.js",
+    "dbinit": "node src/mongoose/init.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

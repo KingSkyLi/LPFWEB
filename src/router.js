@@ -74,6 +74,7 @@ class Router {
         let file = path.resolve(__dirname, './routers/' + fileName + '.js')
         let data = {
             routerClassName: fileName + 'Router',
+            Content: '',
             functionList: []
         }
         // 文件存在
@@ -95,7 +96,9 @@ class Router {
                     })
                 }
             })
-            temp = template(data)
+            let importModuleContent = fs.readFileSync(file).toString().split('/**  Content-End  **/')[0] + '/**  Content-End  **/'
+            importModuleContent && data.content
+            temp = importModuleContent + template(data)
         } else {
             this.routerList[fileName].forEach(item => {
                 data.functionList.push({

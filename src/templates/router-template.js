@@ -1,4 +1,10 @@
 const routerTemplate = `
+{{#if this.isExist}}
+{{{content}}}
+{{else}}
+/** Content-Start **/
+/**  Content-End  **/
+{{/if}}
 class {{routerClassName}} {
     {{#each functionList}}
     {{#if this.isExist}}
