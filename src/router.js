@@ -59,9 +59,9 @@ class Router {
                     }
                     resolve('ok')
                 }).catch(err => { console.log(err) })
-
             } else {
                 this.regisRouter()
+                resolve('ok')
             }
         })
 
@@ -112,7 +112,6 @@ class Router {
             if (contents.length === 4) {
                 data.content = contents[2].trim('\n')
             }
-            console.log(contents)
             temp = template(data)
         } else {
             this.routerList[fileName].forEach(item => {

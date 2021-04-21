@@ -19,8 +19,5 @@ schemaFiles.forEach(fileName => {
     let model = mongoose.model(modelName, schema)
     DbModels[modelName] = model
 })
-
-console.log(DbModels)
-
 module.exports = DbModels
 
