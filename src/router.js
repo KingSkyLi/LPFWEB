@@ -9,7 +9,17 @@ const { routerTemplate } = require('./templates/router-template')
 const template = Handlebars.compile(routerTemplate);
 const inquirer = require('inquirer');
 const { resolve } = require('path')
-
+String.prototype.trim = function (char, type) {
+    if (char) {
+        if (type == 'left') {
+            return this.replace(new RegExp('^\\' + char + '+', 'g'), '');
+        } else if (type == 'right') {
+            return this.replace(new RegExp('\\' + char + '+$', 'g'), '');
+        }
+        return this.replace(new RegExp('^\\' + char + '+|\\' + char + '+$', 'g'), '');
+    }
+    return this.replace(/^\s+|\s+$/g, '');
+};
 class Router {
     constructor(prefix = '/api') {
         this.router = new KoaRouter({ prefix })
@@ -74,7 +84,7 @@ class Router {
         let file = path.resolve(__dirname, './routers/' + fileName + '.js')
         let data = {
             routerClassName: fileName + 'Router',
-            Content: '',
+            content: '',
             functionList: []
         }
         // 文件存在
@@ -96,9 +106,14 @@ class Router {
                     })
                 }
             })
-            let importModuleContent = fs.readFileSync(file).toString().split('/**  Content-End  **/')[0] + '/**  Content-End  **/'
-            importModuleContent && data.content
-            temp = importModuleContent + template(data)
+            let re = /(\/\*\* Content-Start \*\*\/)([\s\S]*)(\/\*\*  Content-End  \*\*\/)/
+            let importModuleContent = fs.readFileSync(file).toString()
+            let contents = importModuleContent.match(re)
+            if (contents.length === 4) {
+                data.content = contents[2].trim('\n')
+            }
+            console.log(contents)
+            temp = template(data)
         } else {
             this.routerList[fileName].forEach(item => {
                 data.functionList.push({
@@ -108,6 +123,7 @@ class Router {
             })
             temp = template(data)
         }
+        console.log(temp)
         return temp
 
     }

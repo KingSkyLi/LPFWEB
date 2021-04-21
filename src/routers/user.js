@@ -1,16 +1,14 @@
 
 /** Content-Start **/
-var a = 1
-/**  Content-End  **/
-/** Content-Start **/
+var m;
 /**  Content-End  **/
 class userRouter {
     async regist(ctx, next) {
         ctx.body = 'regist'
         await next();
     }
-    async login1(ctx, next) {
-        ctx.body = 'login1'
+    async login(ctx, next) {
+        ctx.body = 'login'
         await next();
     }
 }
