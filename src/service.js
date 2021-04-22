@@ -9,6 +9,7 @@ const static = require('koa-static')
 let staticContainer = static(path.resolve(__dirname, '../static'))
 const { router } = require('./router')
 const { EventEmitter } = require('events')
+const chalk = require('chalk')
 class Service {
     constructor(port = 8090) {
         this.app = new koa()
@@ -41,7 +42,7 @@ class Service {
     // 监听端口
     listen() {
         this.app.listen(this.port, () => {
-            console.log('LPFWEB服务器启动成功')
+            console.log(chalk.black.bgGreen('>>>>>>LPFWEB服务器启动成功\n'))
         })
     }
 }

@@ -1,10 +1,12 @@
 
 /** Content-Start **/
-var a = 0
+const db = require('../mongoose/db')
 /**  Content-End  **/
 class userRouter {
     async regist(ctx, next) {
-        ctx.body = 'regist'
+        let _validation = ctx._validation
+        console.log(_validation.errors.all())
+        ctx.body = ctx.request.body
         await next();
     }
     async login(ctx, next) {

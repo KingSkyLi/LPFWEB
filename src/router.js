@@ -8,10 +8,11 @@ const Handlebars = require("handlebars");
 const { routerTemplate } = require('./templates/router-template')
 const template = Handlebars.compile(routerTemplate);
 const inquirer = require('inquirer');
+const Validator = require('validatorjs');
 class Router {
     constructor(prefix = '/api') {
         this.router = new KoaRouter({ prefix })
-        this.routerList = JSON.parse(JSON.stringify(RouterList))
+        this.routerList = RouterList
 
     }
     init() {
@@ -116,12 +117,28 @@ class Router {
             let file = path.resolve(__dirname, './routers/' + fileName + '.js')
             delete require.cache[require.resolve(file)]
             let routerClass = require(file)
-            console.log(routerClass)
             this.routerList[fileName].forEach(item => {
                 let a = routerClass[fileName + 'Router'][item.functionName]
-                console.log(a)
                 if (typeof a === 'function' && item.functionName) {
-                    this.router[item.method.toLowerCase()](item.path, a)
+                    if (item.middleware || item.validatorRules) {
+                        this.router[item.method.toLowerCase()](item.path, async (ctx, next) => {
+                            if (item.validatorRules) {
+                                let data = {}
+                                if (ctx.method === 'POST') {
+                                    data = ctx.request.body
+                                    let validation = new Validator(data, item.validatorRules)
+                                    if (!validation.passes()) {
+                                        ctx._validation = validation
+                                    }
+                                    await next()
+                                }
+                            }
+                            typeof item.middleware === 'function' && item.middleware.apply(this, ctx, next)
+                        }, a)
+                    } else {
+                        this.router[item.method.toLowerCase()](item.path, a)
+                    }
+
                 }
             })
         })
