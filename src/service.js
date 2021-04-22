@@ -20,10 +20,12 @@ class Service {
             this.listen()
         })
     }
+    // 打开服务
     async open() {
         await this.Router.init()
         this.registMiddleware()
     }
+    // 注册中间件
     registMiddleware() {
         this.app.use(staticContainer)
         this.app.use(bodyPaser({
@@ -35,6 +37,7 @@ class Service {
         this.app.use(this.Router.router.allowedMethods());
         this.eventEmitter.emit('ok')
     }
+    // 监听端口
     listen() {
         this.app.listen(this.port, () => {
             console.log('LPFWEB服务器启动成功')

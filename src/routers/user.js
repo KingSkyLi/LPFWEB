@@ -1,6 +1,6 @@
 
 /** Content-Start **/
-let db = require('../mongoose/db')
+var a = 0
 /**  Content-End  **/
 class userRouter {
     async regist(ctx, next) {
@@ -8,8 +8,8 @@ class userRouter {
         console.log(db.user)
         await next();
     }
-    async login(ctx, next) {
-        ctx.body = 'login'
+    async login1(ctx, next) {
+        ctx.body = 'login1'
         await next();
     }
 }

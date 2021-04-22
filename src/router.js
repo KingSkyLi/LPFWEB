@@ -8,18 +8,6 @@ const Handlebars = require("handlebars");
 const { routerTemplate } = require('./templates/router-template')
 const template = Handlebars.compile(routerTemplate);
 const inquirer = require('inquirer');
-const { resolve } = require('path')
-String.prototype.trim = function (char, type) {
-    if (char) {
-        if (type == 'left') {
-            return this.replace(new RegExp('^\\' + char + '+', 'g'), '');
-        } else if (type == 'right') {
-            return this.replace(new RegExp('\\' + char + '+$', 'g'), '');
-        }
-        return this.replace(new RegExp('^\\' + char + '+|\\' + char + '+$', 'g'), '');
-    }
-    return this.replace(/^\s+|\s+$/g, '');
-};
 class Router {
     constructor(prefix = '/api') {
         this.router = new KoaRouter({ prefix })
@@ -122,9 +110,7 @@ class Router {
             })
             temp = template(data)
         }
-        console.log(temp)
         return temp
-
     }
     regisRouter() {
         let files = Object.keys(this.routerList)
