@@ -33,6 +33,7 @@ class Service {
                 json: ['application/json', 'application/x-www-form-urlencoded']
             }
         }))
+        this.Router.regisRouter()
         this.app.use(this.Router.router.routes());
         this.app.use(this.Router.router.allowedMethods());
         this.eventEmitter.emit('ok')

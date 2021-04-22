@@ -5,11 +5,14 @@ var a = 0
 class userRouter {
     async regist(ctx, next) {
         ctx.body = 'regist'
-        console.log(db.user)
         await next();
     }
-    async login1(ctx, next) {
-        ctx.body = 'login1'
+    async login(ctx, next) {
+        ctx.body = 'login'
+        await next();
+    }
+    async test(ctx, next) {
+        ctx.body = 'test'
         await next();
     }
 }

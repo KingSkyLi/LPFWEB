@@ -42,21 +42,19 @@ class Router {
                     message: `文件${path.resolve(__dirname, './config/router-config.js')}发生变换，是否更新routers目录下的路由文件?`
                 }]).then(ans => {
                     if (ans.RouterConfigChanged) {
-                        this.writeRouterFile()
                         fs.writeFileSync(path.resolve(__dirname, './bakfiles/.router-config.bak.js'), content)
+                        this.writeRouterFile()
                     }
                     resolve('ok')
                 }).catch(err => { console.log(err) })
             } else {
-                this.regisRouter()
                 resolve('ok')
             }
         })
-
     }
     writeRouterFile() {
         let files = Object.keys(this.routerList)
-        files.forEach(async fileName => {
+        files.forEach(fileName => {
             let file = path.resolve(__dirname, './routers/' + fileName + '.js')
             let content;
             if (!fs.existsSync(file)) {
@@ -66,7 +64,7 @@ class Router {
             }
             fs.writeFileSync(file, content)
         })
-        this.regisRouter()
+
     }
     createFileContent(fileName, isExist) {
         let file = path.resolve(__dirname, './routers/' + fileName + '.js')
@@ -116,9 +114,12 @@ class Router {
         let files = Object.keys(this.routerList)
         files.forEach(async fileName => {
             let file = path.resolve(__dirname, './routers/' + fileName + '.js')
+            delete require.cache[require.resolve(file)]
             let routerClass = require(file)
+            console.log(routerClass)
             this.routerList[fileName].forEach(item => {
                 let a = routerClass[fileName + 'Router'][item.functionName]
+                console.log(a)
                 if (typeof a === 'function' && item.functionName) {
                     this.router[item.method.toLowerCase()](item.path, a)
                 }
