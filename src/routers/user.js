@@ -26,12 +26,15 @@ class userRouter {
         if (!res) {
             let User = new user({ username: username, password: md5(password) })
             let res = await User.save()
-            delete res.__v
             ctx.body = {
                 status: 200,
                 message: 'OK',
                 error: null,
-                ...res
+                data: {
+                    _id: res._id,
+                    username: res.username,
+                    password: res.password
+                }
             }
             return
         }

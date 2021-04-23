@@ -4,7 +4,7 @@
  * 当前接口加入中间件{ method: 'POST', path: '/regist', functionName: 'regist', middleware:function }
  * 当前接口加参数校验规则{ method: 'POST', path: '/regist', functionName: 'regist', validatorRules:{username:'required | string'} }
 */
-const userRules = require('../src/validator-rules/user-api-rules')
+const userRules = require('../validator-rules/user-api-rules')
 
 const RouterList = {
     user: [
