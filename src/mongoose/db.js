@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const fs = require('fs')
 const path = require('path')
 const chalk = require('chalk')
-let url = 'mongodb://localhost:27017/lpfweb'
+let url = 'mongodb://111.229.119.14:27017/lpfweb'
 const DbModels = {}
 mongoose.connect(`${url}`, {
     useNewUrlParser: true,
