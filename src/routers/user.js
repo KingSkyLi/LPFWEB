@@ -59,7 +59,7 @@ class userRouter {
             }
             return
         }
-        let res = await user.findOne({ username: username, password: password })
+        let res = await user.findOne({ username: username, password: md5(password) })
         if (res) {
             ctx.body = {
                 status: 200,
@@ -72,7 +72,7 @@ class userRouter {
             status: 403,
             message: 'Forbidden',
             error: {
-                _other: ['Incorrect account or password ']
+                username: ['Incorrect account or password ']
             }
         }
 

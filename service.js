@@ -13,9 +13,12 @@ const chalk = require('chalk')
 const registMiddleware = function () {
     this.app.use(staticContainer)
     this.app.use(bodyPaser({
-        extendTypes: {
-            json: ['application/json', 'application/x-www-form-urlencoded']
-        }
+        // extendTypes: {
+        //     json: ['application/json', 'application/x-www-form-urlencoded'],
+        //     text: ['application/text']
+        // }
+        extendTypes: ['json', 'form', 'xml', 'text'],
+        strict: false
     }))
     this.Router.regisRouter()
     this.app.use(this.Router.router.routes());
