@@ -1,7 +1,7 @@
-const { server } = require('../src/service')
+const { server } = require('../service')
 require('../utils/re-write')
 
-const { SECRET_KEY, port } = require('../src/config/server-config')
+const { SECRET_KEY, port } = require('../sys-config/server-config')
 const KoaJwt = require('koa-jwt')
 let Server = new server(port)
 Server.app.use(KoaJwt({

@@ -3,7 +3,7 @@
 const db = require('../mongoose/db')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
-const { SECRET_KEY } = require('../config/server-config')
+const { SECRET_KEY } = require('../../sys-config/server-config')
 function md5(content) {
     let md5 = crypto.createHash('md5')
     return md5.update(content).digest('hex')
