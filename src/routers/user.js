@@ -2,7 +2,6 @@
 /** Content-Start **/
 const db = require('../mongoose/db')
 const crypto = require('crypto')
-const { ok } = require('assert')
 const jwt = require('jsonwebtoken')
 const { SECRET_KEY } = require('../config/server-config')
 function md5(content) {
