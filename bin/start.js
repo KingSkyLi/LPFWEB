@@ -7,6 +7,6 @@ let Server = new server(port)
 Server.app.use(KoaJwt({
     secret: SECRET_KEY
 }).unless({
-    path: [/^\/api\/login/, /^\/api\/regist/]
+    path: ['/',/^\/api\/login/, /^\/api\/regist/]
 }))
 Server.open()
