@@ -30,6 +30,7 @@ class Router {
         })
 
     }
+    // 校验router-config是否发生变化
     async checkRouterConfigChanged() {
         return new Promise((resolve, reject) => {
             let content = fs.readFileSync(path.resolve(__dirname, './src/config/router-config.js'))
@@ -51,6 +52,7 @@ class Router {
             }
         })
     }
+    // 写入routers/*.js
     writeRouterFile() {
         let files = Object.keys(this.routerList)
         files.forEach(fileName => {
@@ -65,6 +67,7 @@ class Router {
         })
 
     }
+    // 生routers/*.js的内容
     createFileContent(fileName, isExist) {
         let file = path.resolve(__dirname, './src/routers/' + fileName + '.js')
         let data = {
@@ -109,6 +112,7 @@ class Router {
         }
         return temp
     }
+    // 自动注册接口函数，如果有validator就校验，有middleware函数就执行。
     regisRouter() {
         let files = Object.keys(this.routerList)
         files.forEach(async fileName => {
